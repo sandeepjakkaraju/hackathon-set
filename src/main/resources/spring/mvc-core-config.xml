@@ -62,4 +62,18 @@
         <!-- needed otherwise exceptions won't be logged anywhere -->
     </bean>
 
+	 <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager" />
+        <property name="filterChainDefinitions">
+            <value>
+                /** = authcBasic, roles[admin]
+            </value>
+        </property>
+    </bean>
+    
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="myRealm"/>
+    </bean>
+
+
 </beans>

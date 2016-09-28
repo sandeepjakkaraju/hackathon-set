@@ -56,8 +56,8 @@ public class PetclinicInitializer extends AbstractDispatcherServletInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-        super.onStartup(servletContext);
-        registerDandelionServlet(servletContext);
+       // super.onStartup(servletContext);
+       // registerDandelionServlet(servletContext);
     }
 
     @Override
@@ -91,7 +91,9 @@ public class PetclinicInitializer extends AbstractDispatcherServletInitializer {
 
         // Dandelion-Datatables filter, used for basic export -->
         DatatablesFilter datatablesFilter = new DatatablesFilter();
-
+        
+//        org.apache.shiro.web.servlet.ShiroFilter sf = new org.apache.shiro.web.servlet.ShiroFilter();
+        		
         return new Filter[]{characterEncodingFilter, dandelionFilter, datatablesFilter};
     }
 
