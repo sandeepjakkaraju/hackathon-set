@@ -35,14 +35,23 @@
                     <span>Veterinarians</span>
                 </petclinic:menuItem>
 
-	<shiro:hasPermission name="view">
+
+
+
+                <shiro:hasPermission name="view">
         <petclinic:menuItem active="${name eq 'error'}" url="/oups.html"
                             title="trigger a RuntimeException to see how it is handled">
                     <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
                     <span>Error</span>
                 </petclinic:menuItem>
     </shiro:hasPermission>
-                
+
+                <petclinic:menuItem active="false" url="/logout" title="logout">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Logout</span>
+                </petclinic:menuItem>
+
+
             </ul>
         </div>
     </div>

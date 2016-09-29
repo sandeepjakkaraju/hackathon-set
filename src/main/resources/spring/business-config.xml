@@ -95,6 +95,7 @@
 			<property name="filterChainDefinitions">
 				<value>
 					/login = authc
+					/logout = logout
 					/** = authc
 				</value>
 			</property>
