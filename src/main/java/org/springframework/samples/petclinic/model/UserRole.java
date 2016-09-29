@@ -1,12 +1,12 @@
 package org.springframework.samples.petclinic.model;
 
-import java.io.Serializable;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.Set;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name="userrole")
@@ -34,6 +34,23 @@ public class UserRole implements Serializable {
 	}
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+
+	public Set<UserRolePerms> getUserRolePerms() {
+		return userRolePerms;
+	}
+
+	public void setUserRolePerms(Set<UserRolePerms> userRolePerms) {
+		this.userRolePerms = userRolePerms;
+	}
+
+	@OneToMany(mappedBy = "userrole")
+	@Fetch(FetchMode.JOIN)
+	private Set<UserRolePerms> userRolePerms;
+
+	public Set<UserRolePerms>  getPermissions()
+	{
+		return userRolePerms;
 	}
 
 }

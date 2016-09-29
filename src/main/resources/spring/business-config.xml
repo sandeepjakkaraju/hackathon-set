@@ -92,7 +92,7 @@
 			<property name="securityManager" ref="securityManager" />
 			<property name="filterChainDefinitions">
 				<value>
-					/** = authcBasic, roles[admin]
+					/** = authcBasic
 				</value>
 			</property>
 		</bean>

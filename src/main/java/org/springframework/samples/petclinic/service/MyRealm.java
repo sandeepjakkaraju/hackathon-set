@@ -45,6 +45,9 @@ public class MyRealm extends AuthorizingRealm {
 				System.out.println(role.getRoleName());
 
 				info.addRole(role.getRoleName());
+				for (UserRolePerms perm: role.getPermissions()) {
+					info.addStringPermission(perm.getPermission());
+				}
 			}
 			return info;
 		}

@@ -79,3 +79,9 @@ CREATE TABLE IF NOT EXISTS userrole (
   users_id INT(4),
   roleName varchar(50)
 ) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS userroleperms (
+  id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  userrole_id INT(4),
+  permission varchar(50)
+) engine=InnoDB;
