@@ -18,16 +18,35 @@ package org.springframework.samples.petclinic;
 import com.github.dandelion.core.web.DandelionFilter;
 import com.github.dandelion.core.web.DandelionServlet;
 import com.github.dandelion.datatables.core.web.filter.DatatablesFilter;
+
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.Permission;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.SessionException;
+import org.apache.shiro.session.mgt.SessionContext;
+import org.apache.shiro.session.mgt.SessionKey;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.subject.SubjectContext;
+import org.apache.shiro.web.servlet.ShiroFilter;
 import org.springframework.util.Assert;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
 
 import javax.servlet.*;
+
+import java.util.Collection;
 import java.util.EnumSet;
+import java.util.List;
 
 
 /**
@@ -54,10 +73,14 @@ public class PetclinicInitializer extends AbstractDispatcherServletInitializer {
 
     private static final String DANDELION_SERVLET = "dandelionServlet";
 
+    private WebApplicationContext rt=null;
+    
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-       // super.onStartup(servletContext);
-       // registerDandelionServlet(servletContext);
+        super.onStartup(servletContext);
+        registerDandelionServlet(servletContext);
+      FilterRegistration.Dynamic securityFilter = servletContext.addFilter("shiroFilter", new DelegatingFilterProxy("shiroFilter"));
+      securityFilter.addMappingForUrlPatterns(null, false, "/*");
     }
 
     @Override
@@ -73,6 +96,7 @@ public class PetclinicInitializer extends AbstractDispatcherServletInitializer {
     protected WebApplicationContext createServletApplicationContext() {
         XmlWebApplicationContext webAppContext = new XmlWebApplicationContext();
         webAppContext.setConfigLocation("classpath:spring/mvc-core-config.xml");
+        rt = webAppContext;
         return webAppContext;
     }
 
@@ -92,14 +116,14 @@ public class PetclinicInitializer extends AbstractDispatcherServletInitializer {
         // Dandelion-Datatables filter, used for basic export -->
         DatatablesFilter datatablesFilter = new DatatablesFilter();
         
-//        org.apache.shiro.web.servlet.ShiroFilter sf = new org.apache.shiro.web.servlet.ShiroFilter();
-        		
         return new Filter[]{characterEncodingFilter, dandelionFilter, datatablesFilter};
     }
 
     @Override
     protected FilterRegistration.Dynamic registerServletFilter(ServletContext servletContext, Filter filter) {
         FilterRegistration.Dynamic registration = super.registerServletFilter(servletContext, filter);
+       // FilterRegistration.Dynamic securityFilter = servletContext.addFilter("shiroFilter", new org.springframework.web.filter.DelegatingFilterProxy("shiroFilter"));
+        
         registration.addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.INCLUDE), false, DANDELION_SERVLET);
         return registration;
     }
