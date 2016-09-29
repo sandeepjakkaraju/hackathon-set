@@ -57,3 +57,6 @@ INSERT IGNORE INTO users VALUES (2,'admin','admin',1);
 
 INSERT IGNORE INTO userrole VALUES (1,1,'admin');
 INSERT IGNORE INTO userrole VALUES (2,2,'admin');
+
+INSERT IGNORE INTO `userroleperms` (`id`,`userrole_id`,`permission`) VALUES (1,1,'view');
+INSERT IGNORE INTO `userroleperms` (`id`,`userrole_id`,`permission`) VALUES (2,2,'noview');
