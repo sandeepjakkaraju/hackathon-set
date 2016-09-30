@@ -10,5 +10,12 @@
             <spring:url value="/resources/images/pets.png" htmlEscape="true" var="petsImage"/>
             <img class="img-responsive" src="${petsImage}"/>
         </div>
+     <div class="row">
+        <div class="col-md-12">
+         <form action="fileUploadForm.htm" >
+         <button type="submit" style="font-face: 'Comic Sans MS'; font-size: larger; color: teal; background-color: #FFFFC0; border: 3pt ridge lightgrey">GO TestUpload page</button>
+         </form>
+        </div>
+     </div>
     </div>
 </petclinic:layout>
